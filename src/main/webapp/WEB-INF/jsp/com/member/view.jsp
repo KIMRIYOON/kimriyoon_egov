@@ -138,6 +138,12 @@
                           </td>
                           <td width="10"></td>
                           <td>
+                              <a href="#LINK" id="delete_member">
+                              <spring:message code="button.delete" />
+                              </a>
+                          </td>
+                          <td width="10"></td>
+                          <td>
                               <a href="<c:url value='/com/member/selectMember.do'/>">
                               <spring:message code="button.list" />
                               </a>
@@ -145,7 +151,7 @@
                         </tr>
                       </table>
                     </div>
-               	 <!-- 버튼 끝 -->   
+               	 <!-- 버튼 끝 -->  
            	 </form:form>         
             </div>
             <!-- //content 끝 -->    
@@ -162,10 +168,20 @@
 <script>
 $(document).ready(function(){
 	
+	${"#delete_member"}.click(function(){
+		if(confirm("정말로 삭제 하시겠습니까?")){
+			
+		}else{
+			return false;
+		}
+		$("#viewForm").attr("action","<c:url value='/com/member/deleteMember.do' />");
+		$("#viewForm").attr("method", "post");
+		$("#viewForm").submit();
+	});
 	$("#update_member").click(function(){
-		$("#updateForm").attr("action","<c:url value='/com/member/updateMember.do' />");
-		$("#updateForm").submit();
-	})
+		$("#viewForm").attr("action","<c:url value='/com/member/updateMember.do' />");
+		$("#viewForm").submit();
+	});
 	
 });
 </script>

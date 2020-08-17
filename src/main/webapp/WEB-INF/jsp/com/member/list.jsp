@@ -48,6 +48,7 @@
                     <col width="15%">  
                     <col width="10%">
                     <col width="32%">
+                    
                     <col width="10%">
                     <col width="10%">
                     </colgroup>
@@ -94,6 +95,23 @@
                     </tbody>
                     </table>
                 </div>
+                
+                <!-- 버튼 시작(상세지정 style로 div에 지정) -->
+                <div class="buttons" style="padding-top:10px;padding-bottom:10px;">
+                  <!-- 목록/저장버튼  -->
+                  <table border="0" cellspacing="0" cellpadding="0" align="center">
+                    <tr> 
+                      <td>
+                          <a href="<c:url value='/com/member/insertMember.do' />">
+                          <spring:message code="button.create" />
+                          </a>
+                      </td>
+                      <td width="10"></td>
+                      
+                    </tr>
+                  </table>
+                </div>
+          	 	<!-- 버튼 끝 -->
                  
             </div>
             <!-- //content 끝 -->    

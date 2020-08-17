@@ -40,7 +40,7 @@
                     </div>
                 </div>
                 
-           	<form:form commandName="updateForm" name="updateForm" method="post">
+           	<form:form commandName="insertForm" name="insertForm" method="post">
               	
                 <div class="modify_user" >
            		 	<table >
@@ -49,8 +49,7 @@
        						사용자 아이디
         				</th>
 	       				<td width="80%" nowrap="nowrap">
-	       				 	<c:out value="${memberVO.EMPLYR_ID}"></c:out>
-	       				 	<input name="EMPLYR_ID" type="hidden" value="${memberVO.EMPLYR_ID}" />
+	       				 	<input id="EMPLYR_ID" name="EMPLYR_ID" type="text" value="" required="required" />
 	       				</td>
      				 </tr>
      				 <tr> 
@@ -58,7 +57,7 @@
        						사용자 암호
         				</th>
 	       				<td width="80%" nowrap="nowrap">
-	       				 	<input id="PASSWORD" type="text" value="" />
+	       				 	<input id="PASSWORD" type="password" value="" required="required" />
 	       				</td>
      				 </tr>
      				 <tr> 
@@ -82,7 +81,7 @@
        						사용자 이름
         				</th>
 	       				<td width="80%" nowrap="nowrap">
-	       				 	<input name="USER_NM" type="text" value="${memberVO.USER_NM}" />
+	       				 	<input name="USER_NM" type="text" value="" />
 	       				</td>
      				 </tr>
      				 <tr> 
@@ -90,7 +89,7 @@
        						우편번호
         				</th>
 	       				<td width="80%" nowrap="nowrap">
-	       				 	<input name="ZIP" type="text" value="${memberVO.ZIP}" />
+	       				 	<input name="ZIP" type="text" value="" />
 	       				</td>
      				 </tr>
      				 <tr> 
@@ -98,7 +97,7 @@
        						집 주소
         				</th>
 	       				<td width="80%" nowrap="nowrap">
-	       				 	<input name="HOUSE_ADRES" type="text" value="${memberVO.HOUSE_ADRES}" />
+	       				 	<input name="HOUSE_ADRES" type="text" value="" />
 	       				</td>
      				 </tr>
      				 <tr> 
@@ -106,7 +105,7 @@
        						이메일
         				</th>
 	       				<td width="80%" nowrap="nowrap">
-	       				 	<input name="EMAIL_ADRES" type="text" value="${memberVO.EMAIL_ADRES}" />
+	       				 	<input name="EMAIL_ADRES" type="text" value="" />
 	       				</td>
      				 </tr>
      				 <tr> 
@@ -116,9 +115,7 @@
 	       				<td width="80%" nowrap="nowrap">
 	       				 	<select name="GROUP_ID">
 	       				 	  <c:forEach var="auth" items="${authVO}">
-	       				 		<option value="${auth.GROUP_ID}"
-	       				 		<c:if test="${auth.GROUP_ID==memberVO.GROUP_ID}"></c:if>
-   				 			  >
+	       				 		<option value="${auth.GROUP_ID}">
        					 		${auth.GROUP_NM}</option>
 	       				 	  </c:forEach>
 	       				 	</select>
@@ -129,25 +126,11 @@
        						소속기관
         				</th>
 	       				<td width="80%" nowrap="nowrap">
-	       				 	<input name="ORGNZT_ID" type="text" value="${memberVO.ORGNZT_ID}" />
+	       				 	<input name="ORGNZT_ID" type="text" value="" />
 	       				</td>
      				 </tr>
-     				 <tr> 
-  					 	<th width="20%" height="23" class="required_text" nowrap >
-       						휴면계정여부
-        				</th>
-	       				<td width="80%" nowrap="nowrap">
-	       				 	<input name="EMPLYR_STTUS_CODE" type="text" value="${memberVO.EMPLYR_STTUS_CODE}" />
-	       				</td>
-     				 </tr>
-     				 <tr> 
-  					 	<th width="20%" height="23" class="required_text" nowrap >
-       						등록일
-        				</th>
-	       				<td width="80%" nowrap="nowrap">
-	       				 	<fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${memberVO.SBSCRB_DE}" />
-	       				</td>
-     				 </tr>
+     				 <!-- 휴면계정 초기값 P 지정 -->
+     				 <input name="EMPLYR_STTUS_CODE" type="hidden" value="P" />
                     </table>
                 </div>
                 <!-- 버튼 시작(상세지정 style로 div에 지정) -->
@@ -156,13 +139,13 @@
                       <table border="0" cellspacing="0" cellpadding="0" align="center">
                         <tr> 
                           <td>
-                              <a href="#LINK" id="update_member">
-                              <spring:message code="button.update" />
+                              <a href="#LINK" id="insert_member">
+                              <spring:message code="button.create" />
                               </a>
                           </td>
                           <td width="10"></td>
                           <td>
-                              <a href="<c:url value='/com/member/selectMember.do'/>">
+                              <a href="<c:url value='/com/member/selectMember.do' />">
                               <spring:message code="button.list" />
                               </a>
                           </td>
@@ -186,21 +169,53 @@
 <script src="http://code.jquery.com/jquery-Latest.min.js"></script>
 <script>
 $(document).ready(function(){
-	
-	$("#update_member").click(function(){
+	$("#EMPLYR_ID").blur(function(){
+		var input_id_value = $(this).val();
+		var urlvar = "<c:url value='/com/member/restViewMember.do?EMPLYR_ID=" + input_id_value + "' />";
+		//alert(urlvar); //디버그
+		//Ajax로 API서버와 통신
+		$.ajax({
+			type: 'get',
+			url: urlvar,
+			success: function(result){
+				if(result == '1'){//조건:중복아이디가 존재한다면
+					//전송버튼 비활성화
+					alert("중복아이디가 존재합니다");
+				}else {
+					//전송버튼 활성화
+					alert("사용가능한 아이디입니다");
+				}
+			},
+			error: function(){
+				alert("RestAPI서버가 작동하지 않습니다.");
+			}
+		});
+	});
+	$("#insert_member").click(function(){
+		//유효성 검사(아래 if문)
+		if($("#EMPLYR_ID").val() == '') {
+			alert("아이디값은 필수입니다.")
+			$("#EMPLYR_ID").focus();
+			return;
+		}
+		if($("#PASSWORD").val() == '') {
+			alert("암호값은 필수입니다.")
+			$("#PASSWORD").focus();
+			return;
+		}
 		if($("#PASSWORD_HINT").val() == '') {
 			alert("암호힌트값은 필수입니다.")
-			$("PASSWORD_HINT").focus();
+			$("#PASSWORD_HINT").focus();
 			return;
 		}
 		if($("#PASSWORD_CNSR").val() == '') {
 			alert("암호힌트 답변값은 필수입니다.")
-			$("PASSWORD_CNSR").focus();
+			$("#PASSWORD_CNSR").focus();
 			return;
 		}
-		$("#updateForm").attr("action","<c:url value='/com/member/updateMember.do' />");
-		$("#updateForm").submit();
-	})
+		$("#insertForm").attr("action","<c:url value='/com/member/insertMember.do' />");
+		$("#insertForm").submit();
+	});
 	
 });
 </script>
