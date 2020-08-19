@@ -32,6 +32,15 @@
 	    p:viewClass="org.springframework.web.servlet.view.JstlView"
 	    p:prefix="/WEB-INF/jsp/" p:suffix=".jsp"/>
 
+    <!-- 화면처리용 JSP 파일명의  prefix, suffix 처리에 대한 타일즈 설정추가 -->
+	<bean id="tilesViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver"
+	p:order="0" p:viewClass="org.springframework.web.servlet.view.tiles3.TilesView" />
+	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer" >
+		<property name="definitions">
+			<value>classpath*:egovframework/spring/com/context-tiles.xml</value>
+		</property>
+	</bean>
+    
     <!-- 로그인 체크가 필요한 URL과 로그인 여부를 체크해준다 -->
     <mvc:interceptors>
         <mvc:interceptor>
@@ -39,6 +48,7 @@
             <mvc:mapping path="/cop/bbs/*Master*.do"/>
             <mvc:mapping path="/uat/uia/*.do"/>
             <mvc:mapping path="/com/member/*.do"/>
+            <mvc:exclude-mapping path="/tiles/*.do"/>
             <mvc:exclude-mapping path="/uat/uia/actionLogin.do"/>
             <mvc:exclude-mapping path="/uat/uia/egovLoginUsr.do"/>
 		    <bean class="egovframework.com.cmm.interceptor.AuthenticInterceptor" />

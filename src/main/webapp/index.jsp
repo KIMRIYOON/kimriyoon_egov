@@ -16,4 +16,8 @@
 <%--
 <jsp:forward page="/cmm/main/mainPage.do"/>
 --%>
+<%-- 옛날 디자인
 <script type="text/javaScript">document.location.href="<c:url value='/cmm/main/mainPage.do'/>"</script> 
+--%>
+<!-- 타일즈 디자인 -->
+<script type="text/javaScript">document.location.href="<c:url value='/tiles/main.do'/>"</script>

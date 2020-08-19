@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:cloud="http://www.springframework.org/schema/cloud"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-						http://www.springframework.org/schema/jdbc  http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd">
+						http://www.springframework.org/schema/jdbc  http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
+						http://www.springframework.org/schema/cloud https://www.springframework.org/schema/cloud/spring-cloud.xsd">
 	
 	<!-- 환경설정 기본정보를 globals.properties 에서 참조하도록 propertyConfigurer 설정  -->
 	<bean id="propertyConfigurer"
@@ -30,7 +32,13 @@
 		<property name="url" value="jdbc:log4jdbc:hsqldb:hsql://localhost/sampledb"/>
 		<property name="username" value="sa"/>
 	</bean> -->
-	 
+	
+	<!-- 클라우드 파스타용 DB커넥션 설정(아래) 	
+	<cloud:data-source id="dataSource-mysql" service-name="kimriyoon-mysql-db">
+		<cloud:connection properties="sessionVariables=sql_mode='ANSI';characterEncoding=UTF-8"/>
+		<cloud:pool pool-size="5-30" max-wait-time="3000"/>
+	</cloud:data-source>
+	 -->
 	<!-- mysql -->
     <bean id="dataSource-mysql" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="${Globals.DriverClassName}"/>

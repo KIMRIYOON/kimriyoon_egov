@@ -168,7 +168,7 @@
 <script>
 $(document).ready(function(){
 	
-	${"#delete_member"}.click(function(){
+	$("#delete_member").click(function(){
 		if(confirm("정말로 삭제 하시겠습니까?")){
 			
 		}else{

@@ -139,9 +139,9 @@
                       <table border="0" cellspacing="0" cellpadding="0" align="center">
                         <tr> 
                           <td>
-                              <a href="#LINK" id="insert_member">
+                              <button type="button" disabled id="insert_member">
                               <spring:message code="button.create" />
-                              </a>
+                              </button>
                           </td>
                           <td width="10"></td>
                           <td>
@@ -181,9 +181,13 @@ $(document).ready(function(){
 				if(result == '1'){//조건:중복아이디가 존재한다면
 					//전송버튼 비활성화
 					alert("중복아이디가 존재합니다");
+				$("#insert_member").attr("disabled", true);
+				$("#insert_member").css({"opacity":"0.5","background-color":"grayscale"});
 				}else {
 					//전송버튼 활성화
 					alert("사용가능한 아이디입니다");
+					$("#insert_member").attr("disabled", false);
+					$("#insert_member").css({"opacity":"1","background-color":"white"});
 				}
 			},
 			error: function(){
