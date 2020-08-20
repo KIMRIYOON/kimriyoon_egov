@@ -27,6 +27,24 @@ public class MemberController {
 	private AuthDAO authDAO;
 	
 	/**
+	 AdminLTE용 관리자 홈 입니다.
+	*/
+	@RequestMapping("/admin/home.do")
+	public String adminHome() throws Exception {
+		return "admin/home";
+	}
+	
+	/**
+	 AdminLTE용 관리자관리 목록을 조회한다.
+	*/
+	@RequestMapping("/admin/member/selectMember.do")
+	public String adminSelectMember(Model model) throws Exception {
+		List<EmployerInfoVO> memberList = memberService.selectMember();
+		model.addAttribute("memberList", memberList);
+		return "admin/member/list";
+	}
+	
+	/**
 	 관리자관리 중복ID체크 GET.
 	 @ResponseBody 에노테이션은 RestAPI방식에서 데이터만 리턴한다.
 	*/
