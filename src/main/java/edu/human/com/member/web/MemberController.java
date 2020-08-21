@@ -27,6 +27,72 @@ public class MemberController {
 	private AuthDAO authDAO;
 	
 	/**
+	 AdminLTE용 관리자관리 삭제 POST.
+	*/
+	@RequestMapping(value = "/admin/member/deleteMember.do", method = RequestMethod.POST)
+	public String adminDeleteMember(@RequestParam("EMPLYR_ID") String emplyr_id , Model model) throws Exception {
+		memberService.deleteMember(emplyr_id);
+		return "redirect:/admin/member/selectMember.do";
+	}
+	/**
+	 AdminLTE용 관리자관리 입력 POST.
+	*/
+	@RequestMapping(value = "/admin/member/insertMember.do", method = RequestMethod.POST)
+	public String adminInsertMember(EmployerInfoVO vo, Model model) throws Exception {
+		//패스워드 암호화처리
+		String enpassword = EgovFileScrty.encryptPassword(vo.getPASSWORD(), vo.getEMPLYR_ID());
+		vo.setPASSWORD(enpassword);
+		memberService.insertMember(vo);
+		return "redirect:/admin/member/selectMember.do";
+	}
+	/**
+	AdminLTE용 관리자관리 입력 GET.
+	*/
+	@RequestMapping(value = "/admin/member/insertMember.do", method = RequestMethod.GET)
+	public String adminInsertMember(Model model) throws Exception {
+		List<AuthVO> authVO = authDAO.selectAuth();
+		model.addAttribute("authVO", authVO);
+		return "admin/member/insert";
+	}
+	
+	/**
+	 AdminLTE용 관리자관리 수정 POST.
+	*/
+	@RequestMapping(value = "/admin/member/updateMember.do", method = RequestMethod.POST)
+	public String adminUpdateMember(EmployerInfoVO vo, Model model) throws Exception {
+		//패스워드 암호화처리
+		if(vo.getPASSWORD() != "") {
+			// 1. 입력한 비밀번호를 암호화한다.
+			String enpassword = EgovFileScrty.encryptPassword(vo.getPASSWORD(), vo.getEMPLYR_ID());
+			vo.setPASSWORD(enpassword);
+		}
+		memberService.updateMember(vo);
+		return "redirect:/admin/member/viewMember.do?EMPLYR_ID=" + vo.getEMPLYR_ID();
+	}
+	/**
+	 AdminLTE용 관리자관리 수정 GET.
+	*/
+	@RequestMapping(value = "/admin/member/updateMember.do", method = RequestMethod.GET)
+	public String adminUpdateMember(@RequestParam("EMPLYR_ID") String EMPLYR_ID, Model model) throws Exception {
+		EmployerInfoVO vo = memberService.viewMember(EMPLYR_ID);
+		model.addAttribute("memberVO", vo);
+		List<AuthVO> authVO = authDAO.selectAuth();
+		model.addAttribute("authVO", authVO);
+		return "admin/member/update";
+	}
+	/**
+	 AdminLTE용 관리자관리 상세보기.
+	*/
+	@RequestMapping(value = "/admin/member/viewMember", method = RequestMethod.GET)
+	public String adminViewMember(@RequestParam("EMPLYR_ID") String EMPLYR_ID, Model model) throws Exception {
+		EmployerInfoVO vo = memberService.viewMember(EMPLYR_ID);
+		model.addAttribute("memberVO", vo);
+		List<AuthVO> authVO = authDAO.selectAuth();
+		model.addAttribute("authVO", authVO);
+		return "admin/member/view";
+	}
+	
+	/**
 	 AdminLTE용 관리자 홈 입니다.
 	*/
 	@RequestMapping("/admin/home.do")
