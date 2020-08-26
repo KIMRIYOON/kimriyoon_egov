@@ -1,0 +1,12 @@
+---
+applications:
+- name: kimriyoon-egov
+  memory: 1024M
+  disk_quota: 1024M
+  instances: 1
+  host: kimriyoon-egov
+  domain: paas-ta.org
+  services:
+  - kimriyoon-egov-db
+
+

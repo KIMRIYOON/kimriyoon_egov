@@ -23,7 +23,7 @@ import edu.human.com.member.service.impl.MemberDAO;
 @ContextConfiguration(locations ={"file:src/main/webapp/WEB-INF/config/egovframework/springmvc/egov-com-servlet.xml",
 "file:src/main/resources/egovframework/spring/com/*.xml"})
 @WebAppConfiguration
-public class TestMember {
+public class TestMember { 
 	
 	@Inject
 	private DataSource ds;
