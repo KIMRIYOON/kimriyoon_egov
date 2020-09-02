@@ -210,8 +210,7 @@
 	                                <input type="hidden" name="fileListCnt" value="0" />
 	                            </c:if>
                                 </td>
-					          </tr>
-					            					  
+					          </tr>				  
 					      </c:if>
 					    </table>    
                     </div>

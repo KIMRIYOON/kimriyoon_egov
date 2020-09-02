@@ -34,21 +34,21 @@
 	</bean> -->
 	
 	<!-- 클라우드 파스타용 DB커넥션 설정(아래) -->	
-	
+	<!-- 
 	<cloud:data-source id="dataSource-mysql" service-name="kimriyoon-egov-db">
 		<cloud:connection properties="sessionVariables=sql_mode='ANSI';characterEncoding=UTF-8"/>
 		<cloud:pool pool-size="5-30" max-wait-time="3000"/>
 	</cloud:data-source>
-	 
+	  -->
 	<!-- mysql --> 
-	<!-- 
+	
     <bean id="dataSource-mysql" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="${Globals.DriverClassName}"/>
         <property name="url" value="${Globals.Url}" />
         <property name="username" value="${Globals.UserName}"/>
         <property name="password" value="${Globals.Password}"/>
     </bean>
- -->
+
     
     <!-- Oracle -->
     <!-- 
