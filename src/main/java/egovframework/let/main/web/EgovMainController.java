@@ -56,14 +56,14 @@ public class EgovMainController {
 	}
 
 	/*
-	 * 타일즈를 이용한 메인페이지 매핑
+	 * 타일즈을 이용한 메인 페이지 매핑
 	 */
-	@RequestMapping(value = "/tiles/main.do")
+	@RequestMapping(value="/tiles/main.do")
 	public String main(ModelMap model, HttpServletRequest request) throws Exception {
 		
 		// 공지사항 메인 컨텐츠 조회 시작 ---------------------------------
 		BoardVO boardVO = new BoardVO();
-		boardVO.setPageUnit(5); 
+		boardVO.setPageUnit(5);
 		boardVO.setPageSize(10);
 		boardVO.setBbsId("BBSMSTR_AAAAAAAAAAAA");
 
@@ -85,11 +85,10 @@ public class EgovMainController {
 		model.addAttribute("galList", map.get("resultList"));
 
 		// 공지사항 메인컨텐츠 조회 끝 -----------------------------------
+
 		
 		return "EgovMainView.tiles";
 	}
-	
-	
 	/**
 	 * 템플릿 메인 페이지 조회
 	 * @return 메인페이지 정보 Map [key : 항목명]
